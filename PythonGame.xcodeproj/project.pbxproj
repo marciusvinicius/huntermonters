@@ -6,10 +6,25 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		049C918C17DA2A8600BA43AF /* level0.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = level0.text; path = data/levels/level0.text; sourceTree = "<group>"; };
+		04A95EA517D90AA5009BBA9C /* defences.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = defences.py; sourceTree = "<group>"; };
+		04A95EA717D90AA5009BBA9C /* level.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = level.py; sourceTree = "<group>"; };
+		04A95EAA17D90E42009BBA9C /* sprites.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = sprites.py; sourceTree = "<group>"; };
+		04A95EAB17D9106D009BBA9C /* game.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = game.py; sourceTree = "<group>"; };
+		04A95EAC17D91811009BBA9C /* locals.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = locals.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		04A95E9A17D90A8B009BBA9C = {
 			isa = PBXGroup;
 			children = (
+				049C918C17DA2A8600BA43AF /* level0.text */,
+				04A95EA517D90AA5009BBA9C /* defences.py */,
+				04A95EAB17D9106D009BBA9C /* game.py */,
+				04A95EAA17D90E42009BBA9C /* sprites.py */,
+				04A95EAC17D91811009BBA9C /* locals.py */,
+				04A95EA717D90AA5009BBA9C /* level.py */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +167,7 @@
 				04A95EA417D90A8B009BBA9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

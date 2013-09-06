@@ -1,0 +1,7 @@
+leveldata
+    gravidade: default
+    background: "data/levels/backgrounds/level1.png"
+
+grids
+    default: []
+    collideblocks: []
