@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		04957FD817DBADC80058AE75 /* gridsystem.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = gridsystem.py; sourceTree = "<group>"; };
 		049C918C17DA2A8600BA43AF /* level0.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = level0.text; path = data/levels/level0.text; sourceTree = "<group>"; };
 		04A95EA517D90AA5009BBA9C /* defences.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = defences.py; sourceTree = "<group>"; };
 		04A95EA717D90AA5009BBA9C /* level.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = level.py; sourceTree = "<group>"; };
@@ -22,6 +23,7 @@
 				049C918C17DA2A8600BA43AF /* level0.text */,
 				04A95EA517D90AA5009BBA9C /* defences.py */,
 				04A95EAB17D9106D009BBA9C /* game.py */,
+				04957FD817DBADC80058AE75 /* gridsystem.py */,
 				04A95EAA17D90E42009BBA9C /* sprites.py */,
 				04A95EAC17D91811009BBA9C /* locals.py */,
 				04A95EA717D90AA5009BBA9C /* level.py */,

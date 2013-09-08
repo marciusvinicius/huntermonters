@@ -5,6 +5,7 @@ import pygame
 from locals import *
 
 from sprites import SpriteBasic, AnimatedSprite
+from level import Level
 
 
 class Game (object):
@@ -13,7 +14,7 @@ class Game (object):
         Cria a screen e controlar o loop game
     '''
     
-    def __init__ (self, size, display_name, level):
+    def __init__ (self, size, display_name):
         pygame.init()
         self.clock = pygame.time.Clock()
         self.objects_in_scene = []
@@ -23,7 +24,7 @@ class Game (object):
         self.playtime = 0
         self.screenrect = None
         self.allgroup = pygame.sprite.Group()
-        self.set_variables(size, display_name)
+        self.initialization(size, display_name)
 
     def write(self, msg="pygame is cool"):
         myfont = pygame.font.SysFont("None", 32)
@@ -31,7 +32,7 @@ class Game (object):
         mytext = mytext.convert_alpha()
         return mytext
     
-    def set_variables (self, size, display_name):
+    def initialization (self, size, display_name):
         self.size = size
         self.display_name = display_name
         self.screen (size, display_name)
@@ -49,8 +50,8 @@ class Game (object):
                 if event.key == pygame.K_ESCAPE:
                     self.done = True
 
-    def main (self):
-        
+    def main (self, level):
+        self.level = level
         while self.done == False:
             self.events ()
             #Games Variables
@@ -60,6 +61,7 @@ class Game (object):
 
             #control update and Draw
             self.update (self.playtime)
+            level.update(self.playtime)
             self.draw ()
             pygame.display.flip()
         pygame.quit()
@@ -79,12 +81,15 @@ class Game (object):
         font = pygame.font.Font(None, 18)
         text = font.render("Tempo de Jogo: %s" % self.playtime,True, RED)
         self.screen.blit(text, [0,10])
+        self.level.draw ()
         self.allgroup.clear(self.screen, self.background)
         self.allgroup.draw(self.screen)
 
 if __name__ == '__main__':
     size = (800, 600)
-    level = Level ("level0.yaml")
-    game = Game(size, "Hanter Monters", level)
+
+    game = Game (size, "Hanter Monters")
+    level = Level ("level0.text", [800, 600], game)
     sp = AnimatedSprite ([200, 200], "player.png", game)
-    game.main()
+    level.load_level ()
+    game.main (level)
