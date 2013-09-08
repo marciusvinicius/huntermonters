@@ -108,6 +108,7 @@ class Block (SpriteBasic):
         self.is_collider = is_collider
         self.rect.x = position[0] * self.image.get_rect().w
         self.rect.y = position[1] * self.image.get_rect().h
+        self.groups = game.blockgroup
 
     def update (self, playtime):
         pass
