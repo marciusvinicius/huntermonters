@@ -91,8 +91,11 @@ class Block (SpriteBasic):
     
     SPRITEMAP = {
         0: "grass.png",
-        1: "water.png"
+        1: "water.png",
+        2: "stone.png",
+        3: "sand.png",
     }
+
     BLOCKDEFAULT = "grass.png"
     
     def __init__ (self, position, type, is_collider, game):

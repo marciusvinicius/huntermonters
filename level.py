@@ -46,7 +46,7 @@ class Level (object):
         for row in range (w):
             grid.append ([])
             for column in range (h):
-                grid [row].append (random.randint(0, 1))
+                grid [row].append (random.randint(0, 3))
         file = open(os.path.join ("data/levels", self._file), 'w')
         pickle.dump (grid, file)
         file.close ()
