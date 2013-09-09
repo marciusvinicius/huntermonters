@@ -7,7 +7,7 @@ import pygame
 from locals import *
 
 
-class SpriteBasic (pygame.sprite.Sprite):
+class SpriteBasic (object):
 
     def __init__ (self, position, fsprite, game):
         '''
@@ -19,19 +19,9 @@ class SpriteBasic (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.pos = [0, 0]
         self.speed = 4.5
-        self.groups = game.allgroup
-        pygame.sprite.Sprite.__init__(self, self.groups)
 
     def update (self, playtime):
-        pressed = pygame.key.get_pressed()
-        move_vector = (0, 0)
-        '''
-            Change for state player
-        '''
-        for m in (move_map[key] for key in move_map if pressed[key]):
-            area = self.game.screen.get_rect()
-            self.rect.centerx += m[0] * MOVE_SPEED
-            self.rect.centery += m[1] * MOVE_SPEED
+        raise NotImplemented
 
 
 def load_sliced_sprites(w, h, fsprite):
@@ -51,7 +41,7 @@ def load_sliced_sprites(w, h, fsprite):
         return images
 
 
-class AnimatedSprite (SpriteBasic):
+class AnimatedSprite (SpriteBasic, pygame.sprite.Sprite):
     
     def __init__ (self, position, fsprite, game):
         SpriteBasic.__init__(self, position, fsprite, game)
@@ -69,21 +59,32 @@ class AnimatedSprite (SpriteBasic):
         self._images = load_sliced_sprites (32, 32, fsprite)
         self.image = self._images[self._frame]
         self.rect = self.image.get_rect ()
+        self.centerx = position[0]
+        self.centery = position[1]
         self.groups = game.allgroup
+        pygame.sprite.Sprite.__init__(self, self.groups)
 
 
     def update(self, t):
         # Note that this doesn't work if it's been more that self._delay
         # time between calls to update(); we only update the image once
         # then, but it really should be updated twice.
-        SpriteBasic.update(self, t)
+        pressed = pygame.key.get_pressed()
+        move_vector = (0, 0)
+        for m in (move_map[key] for key in move_map if pressed[key]):
+            #verificar a area que o personagem esta tentando ir
+            area = self.game.screen.get_rect()
+            self.rect.centerx += m[0] * MOVE_SPEED
+            self.rect.centery += m[1] * MOVE_SPEED
+
+
 """        if t - self._last_update > self._delay:
             self._frame += 1
             if self._frame >= len(self._images): self._frame = 0
             self.image = self._images[self._frame]
             self._last_update = t
 """
-class Block (SpriteBasic):
+class Block (SpriteBasic, pygame.sprite.Sprite):
     '''
        Classe que representa os blocos, onde o personagem caminha
     '''
@@ -98,17 +99,18 @@ class Block (SpriteBasic):
 
     BLOCKDEFAULT = "grass.png"
     
-    def __init__ (self, position, type, is_collider, game):
+    def __init__ (self, position, int_type, is_collider, game):
         try:
-            fsprite = Block.SPRITEMAP[type]
+            fsprite = Block.SPRITEMAP[int_type]
         except KeyError:
             fsprite = Block.BLOCKDEFAULT
 
         SpriteBasic.__init__(self, position, fsprite, game)
         self.is_collider = is_collider
-        self.rect.x = position[0] * self.image.get_rect().w
-        self.rect.y = position[1] * self.image.get_rect().h
+        self.rect.x = position[0] * self.rect.w
+        self.rect.y = position[1] * self.rect.h
         self.groups = game.blockgroup
+        pygame.sprite.Sprite.__init__(self, self.groups)
 
     def update (self, playtime):
         pass

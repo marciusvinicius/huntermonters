@@ -14,7 +14,6 @@ class Level (object):
         self.grid = self.map (map[0], map[1])
         self._file = file
         self.game = game
-        self.groupblocks = pygame.sprite.Group ()
 
     def map (self, x, y):
         grid = []
@@ -37,7 +36,7 @@ class Level (object):
         for i, line in enumerate(grid):
             for j, row in enumerate(line):
                 bl = Block([i, j], row, False, self.game)
-                bl.group = self.groupblocks
+                bl.groups = self.game.blockgroup
 
 
     def build_word (self, w=100, h=100):
@@ -55,8 +54,7 @@ class Level (object):
         pass
 
     def draw (self):
-        self.groupblocks.clear(self.game.screen, self.game.background)
-        self.groupblocks.draw (self.game.screen)
+        pass
 
 
 #
