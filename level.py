@@ -35,7 +35,7 @@ class Level (object):
         file.close ()
         for i, line in enumerate(grid):
             for j, row in enumerate(line):
-                bl = Block([i, j], row, False, self.game)
+                bl = Block([i, j], row, True, self.game)
                 bl.groups = self.game.blockgroup
 
 

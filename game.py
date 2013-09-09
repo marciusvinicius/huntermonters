@@ -4,6 +4,7 @@
 import pygame
 from locals import *
 
+from collision import CollisionObject
 from sprites import SpriteBasic, AnimatedSprite
 from level import Level
 
@@ -27,11 +28,11 @@ class Game (object):
 
         self.initialization (size, display_name)
 
-    def write(self, msg="pygame is cool"):
-        myfont = pygame.font.SysFont ("None", 32)
-        mytext = myfont.render (msg, True, (0,0,0))
-        mytext = mytext.convert_alpha()
-        return mytext
+    def render_string(self, msg="pygame is cool"):
+        font = pygame.font.Font (None, 18)
+        text = font.render (msg,True, RED)
+        self.screen.blit (text, [0,1])
+        return text
     
     def initialization (self, size, display_name):
         self.size = size
@@ -74,6 +75,11 @@ class Game (object):
         pygame.quit ()
 
     
+    def get_sprite_in (self, movement, layer=None):
+        for sprite in self.blockgroup:
+            if sprite.rect.center ==  movement:
+                return sprite
+
     def update (self, playtime):
         # Clear the screen and set the screen background
         self.screen.fill (DEFAULT_SCREEN_COLOR)
@@ -81,19 +87,16 @@ class Game (object):
         self.blockgroup.update (self.playtime)
 
     def draw (self):
-        font = pygame.font.Font (None, 18)
-        text = font.render ("Tempo de Jogo: %s" % self.playtime,True, RED)
-        self.screen.blit (text, [10,30])
         self.blockgroup.clear (self.screen, self.background)
         self.blockgroup.draw (self.screen)
         self.allgroup.clear (self.screen, self.background)
         self.allgroup.draw (self.screen)
+        self.render_string ("Tempo de Jogo: %s" % self.playtime)
         
         
 
 if __name__ == '__main__':
     size = (800, 600)
-
     game = Game (size, "Hanter Monters")
     level = Level ("level0.text", size, game)
     sp = AnimatedSprite ([1, 1], "player.png", game)

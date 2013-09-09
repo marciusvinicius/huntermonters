@@ -2,10 +2,12 @@
 #encoding: utf-8
 
 import os
+import copy
 import pygame
 
-from locals import *
 
+from locals import *
+from collision import CollisionObject
 
 class SpriteBasic (object):
 
@@ -19,6 +21,7 @@ class SpriteBasic (object):
         self.rect = self.image.get_rect()
         self.pos = [0, 0]
         self.speed = 4.5
+        self.is_collider = True
 
     def update (self, playtime):
         raise NotImplemented
@@ -74,9 +77,17 @@ class AnimatedSprite (SpriteBasic, pygame.sprite.Sprite):
         for m in (move_map[key] for key in move_map if pressed[key]):
             #verificar a area que o personagem esta tentando ir
             area = self.game.screen.get_rect()
-            self.rect.centerx += m[0] * MOVE_SPEED
-            self.rect.centery += m[1] * MOVE_SPEED
+            nextMoveX = self.rect.centerx + m[0] * MOVE_SPEED
+            nextMoveY = self.rect.centery + m[1] * MOVE_SPEED
+            other_sprite = \
+                self.game.get_sprite_in ((nextMoveX, nextMoveY))
 
+            #criando uma copia para validar o possivel movimento futuro
+            sprite = copy.copy(self)
+            sprite.rect = pygame.Rect (nextMoveX, nextMoveY, 32, 32)
+            if other_sprite and not CollisionObject.sprite_collision (sprite, other_sprite):
+                self.rect.centerx = nextMoveX
+                self.rect.centery = nextMoveY 
 
 """        if t - self._last_update > self._delay:
             self._frame += 1
@@ -98,6 +109,7 @@ class Block (SpriteBasic, pygame.sprite.Sprite):
     }
 
     BLOCKDEFAULT = "grass.png"
+    COLLIDERS = [1, 2]
     
     def __init__ (self, position, int_type, is_collider, game):
         try:
@@ -106,7 +118,9 @@ class Block (SpriteBasic, pygame.sprite.Sprite):
             fsprite = Block.BLOCKDEFAULT
 
         SpriteBasic.__init__(self, position, fsprite, game)
-        self.is_collider = is_collider
+        self.is_collider = False
+        if int_type in self.COLLIDERS:
+            self.is_collider = True
         self.rect.x = position[0] * self.rect.w
         self.rect.y = position[1] * self.rect.h
         self.groups = game.blockgroup
